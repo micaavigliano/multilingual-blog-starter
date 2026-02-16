@@ -71,7 +71,7 @@ seoDescription: "Detailed description for search crawlers"
 keywords: "react, a11y, mdx"
 ---
 ```
-- Finally, as mentioned on UI Customization [Link Text](#ui-customization), the post is being rendered in the frontend thanks to the component `RichText.tsx`.
+- Finally, as mentioned on [UI Customization](#ui-customization), the post is being rendered in the frontend thanks to the component `RichText.tsx`.
 
 ## Contributing
 
