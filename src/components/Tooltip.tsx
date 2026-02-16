@@ -1,52 +1,54 @@
-import React, { useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import type { ReactNode } from "react"
+
+export const tooltipStyles = {
+  container: "bg-black text-white text-center rounded p-3 absolute z-10 transition-opacity duration-300 ease-in-out w-max max-w-xs shadow-xl",
+  wrapper: "relative inline-block",
+}
 
 interface TooltipProps {
   text: string
   children: ReactNode
   direction: "top" | "bottom" | "left" | "right"
-  id: string
+  id?: string
+  customStyles?: Partial<typeof tooltipStyles>
 }
 
-const Tooltip: React.FC<TooltipProps> = ({ text, children, direction, id }) => {
+const Tooltip = ({ text, children, direction, id, customStyles }: TooltipProps) => {
   const [showTooltip, setShowTooltip] = useState<boolean>(false)
+  const styles = { ...tooltipStyles, ...customStyles }
 
-  const tooltipOn = () => {
-    setShowTooltip(true)
-  }
-
-  const tooltipOff = () => {
-    setShowTooltip(false)
-  }
-
-  const closeTooltip = (ev: KeyboardEvent) => {
-    if (ev.key === "Escape") {
-      setShowTooltip(false)
-    }
-  }
-
-  const getTooltipStyle = () => {
-    const tooltipStyle = {
-      [direction === "left" ? "right" : "left"]: "100%",
-      [direction === "top" || direction === "bottom"
-        ? "marginLeft"
-        : "marginTop"]: "7%",
-    }
-
-    return tooltipStyle
-  }
+  const tooltipOn = () => setShowTooltip(true)
+  const tooltipOff = () => setShowTooltip(false)
 
   useEffect(() => {
-    document.addEventListener("keydown", closeTooltip)
+    const closeTooltip = (ev: KeyboardEvent) => {
+      if (ev.key === "Escape") {
+        setShowTooltip(false)
+      }
+    }
 
+    if (showTooltip) {
+      document.addEventListener("keydown", closeTooltip)
+    }
+    
     return () => {
       document.removeEventListener("keydown", closeTooltip)
     }
-  }, [])
+  }, [showTooltip])
+
+  const getDirectionClasses = () => {
+    if (direction === "top") return "bottom-[calc(100%+8px)] left-1/2 -translate-x-1/2 mb-2"
+    if (direction === "bottom") return "top-[calc(100%+8px)] left-1/2 -translate-x-1/2 mt-2"
+    if (direction === "left") return "right-[calc(100%+8px)] top-1/2 -translate-y-1/2 mr-2"
+    if (direction === "right") return "left-[calc(100%+8px)] top-1/2 -translate-y-1/2 ml-2"
+
+    return ""
+  }
 
   return (
     <div
-      className="relative inline-block justify-center text-center"
+      className={styles.wrapper}
       onMouseEnter={tooltipOn}
       onMouseLeave={tooltipOff}
       onFocus={tooltipOn}
@@ -54,27 +56,10 @@ const Tooltip: React.FC<TooltipProps> = ({ text, children, direction, id }) => {
     >
       {showTooltip && (
         <div
-          className={`bg-black text-white text-center rounded p-3 absolute z-10 transition-opacity duration-300 ease-in-out w-fit outline outline-offset-0 ${direction === "top"
-            ? "bottom-[calc(100%+1px)] left-10 transform translate-x-[-60%] mb-2"
-            : ""
-            }
-          ${direction === "bottom"
-              ? "top-[calc(100%+1px)] left-10 transform translate-x-[-60%] mt-2"
-              : ""
-            }
-          ${direction === "left"
-              ? "-left-30 top-1/2 transform -translate-y-1/2 mr-2 w-1/2"
-              : ""
-            }
-          ${direction === "right"
-              ? "-right-100 top-1/2 transform -translate-y-1/2 ml-2"
-              : ""
-            }`}
-          data-placement={direction}
-          role="tooltip"
-          aria-hidden="true"
           id={id}
-          style={getTooltipStyle()}
+          role="tooltip"
+          className={`${styles.container} ${getDirectionClasses()}`}
+          aria-hidden="true" 
         >
           {text}
         </div>
