@@ -1,0 +1,20 @@
+# robots.txt — https://www.robotstxt.org/robotstxt.html
+# Last updated: 2026-02-16
+
+User-agent: *
+# --- Allow public sections ---
+Allow: /
+Allow: /blog/
+
+# --- Block internal or temporary areas ---
+Disallow: /admin/
+Disallow: /api/
+Disallow: /private/
+Disallow: /drafts/
+Disallow: /404/
+Disallow: /assets-temp/
+Disallow: /node_modules/
+Disallow: /.env/
+Disallow: /.env.local/
+Disallow: /wp-login.php/
+Disallow: /wp-admin/
