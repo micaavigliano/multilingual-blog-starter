@@ -3,6 +3,7 @@ import type { TranslationKey } from "@/lib/translations"
 import { useI18n } from "@/lib/I18nProvider"
 import { Link } from "@tanstack/react-router"
 import { ArrowUpRight, Code2, Globe, ShieldCheck, Zap, Github } from "lucide-react"
+import { useSEO } from "@/hook/useSEO"
 
 // [this component it is not vital for the development. Just exists as a main page for my project you can omit it, reuse it for your purposes or delete it]
 
@@ -36,6 +37,10 @@ const Hello = () => {
       desc: t('home.principle.perf.desc'),
     },
   ]
+
+  useSEO({
+    description: t("home.source.description")
+  })
 
   return (
     <article className="pt-16 pb-22 animate-fade-in-up mx-auto px-6 flex flex-col items-center gap-12 lg:gap-3 md:mx-28 min-h-screen text-center" aria-labelledby="name-title">

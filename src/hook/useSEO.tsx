@@ -5,13 +5,13 @@ import { locales, defaultLocale, type Locale, socialLocaleMap } from '@/lib/i18n
 
 interface SEOProps {
   title?: string;
-  description?: string;
+  description: string;
   keywords?: string[];
   updatedAt?: string;
   isBlogPost?: boolean;
 }
 
-export const useSEO = (props: SEOProps = {}) => {
+export const useSEO = (props: SEOProps) => {
   const { 
     title, 
     description, 

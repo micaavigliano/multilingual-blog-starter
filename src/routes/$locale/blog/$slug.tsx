@@ -46,7 +46,7 @@ function PostPage() {
   
   useSEO({
     title: post.seoTitle || post.title,
-    description: post.seoDescription,
+    description: post.seoDescription || post.title,
     keywords: post.keywords,
     updatedAt: post.updatedAtISO,
     isBlogPost: true
