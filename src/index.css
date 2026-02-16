@@ -1,68 +1,113 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@import "tailwindcss";
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+/* you can replace all the styles on this file. Are just here in order to make the skeleton a little less skeleton  */
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
+@layer base {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    --background: 30 100% 98%;
+    --foreground: 0 0% 0%;
+    --border: 0 0% 90%;
   }
-  a:hover {
-    color: #747bff;
+}
+
+@theme {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-border: hsl(var(--border));
+
+  /* Optional: custom breakpoint like your old 2xl=1400px */
+  --breakpoint-2xl: 1400px;
+
+  /* Focus ring color */
+  --focus-ring-primary: #0066ff;
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
   }
-  button {
-    background-color: #f9f9f9;
+
+  *:focus:not(:focus-visible) {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  h1:focus-visible {
+    outline: 2px solid #5E548E; /* Use your brand primary color */
+    outline-offset: 4px;
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+
+  /* Ensure parent containers don't clip focus rings */
+  article, li, ul {
+    overflow: visible !important;
+  }
+
+  /* Also ensure the main content area allows overflow */
+  main, section {
+    overflow: visible !important;
+  }
+
+  /* Single unified link focus style */
+  a:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 4px var(--focus-ring-primary), 0 0 0 8px rgba(0, 102, 255, 0.25) !important;
+    outline-offset: 4px;
+    border-radius: 8px;
+    padding: 4px 8px !important;
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Button focus styles */
+  button:focus-visible,
+  [role="button"]:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 4px var(--focus-ring-primary), 0 0 0 8px rgba(0, 102, 255, 0.3), 0 6px 16px rgba(0, 102, 255, 0.2);
+    outline-offset: 6px;
+    transform: translateY(-1px);
+    padding: 10px;
+  }
+
+  /* Form input focus styles */
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 4px var(--focus-ring-primary), 0 0 0 8px rgba(0, 102, 255, 0.2);
+    border-color: var(--focus-ring-primary);
+    outline-offset: 2px;
+    transition: all 0.15s ease-in-out;
+  }
+}
+
+@layer utilities {
+  .nav-focus:focus-visible {
+    box-shadow: 0 0 0 4px var(--focus-ring-primary), 0 0 0 8px rgba(0, 102, 255, 0.25) !important;
+    background-color: rgba(0, 102, 255, 0.08);
+    outline-offset: 4px;
+    border-radius: 10px;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(10px)
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0)
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fade-in 0.6s ease-out;
   }
 }

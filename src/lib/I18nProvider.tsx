@@ -12,7 +12,7 @@ interface I18nProviderProps {
   children: ReactNode
 }
 
-export function I18nProvider({ locale, children }: I18nProviderProps) {
+export const I18nProvider = ({ locale, children }: I18nProviderProps) => {
   return (
     <I18nContext.Provider value={{ locale }}>
       {children}
@@ -20,7 +20,7 @@ export function I18nProvider({ locale, children }: I18nProviderProps) {
   )
 }
 
-export function useI18n() {
+export const useI18n = () => {
   const context = useContext(I18nContext)
   if (!context) {
     throw new Error('useI18n must be used within I18nProvider')

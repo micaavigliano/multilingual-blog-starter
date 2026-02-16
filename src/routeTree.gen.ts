@@ -9,27 +9,87 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LocaleIndexRouteImport } from './routes/$locale/index'
+import { Route as LocaleBlogIndexRouteImport } from './routes/$locale/blog/index'
+import { Route as LocaleBlogSlugRouteImport } from './routes/$locale/blog/$slug'
 
-export interface FileRoutesByFullPath {}
-export interface FileRoutesByTo {}
+const LocaleIndexRoute = LocaleIndexRouteImport.update({
+  id: '/$locale/',
+  path: '/$locale/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LocaleBlogIndexRoute = LocaleBlogIndexRouteImport.update({
+  id: '/$locale/blog/',
+  path: '/$locale/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LocaleBlogSlugRoute = LocaleBlogSlugRouteImport.update({
+  id: '/$locale/blog/$slug',
+  path: '/$locale/blog/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+
+export interface FileRoutesByFullPath {
+  '/$locale/': typeof LocaleIndexRoute
+  '/$locale/blog/$slug': typeof LocaleBlogSlugRoute
+  '/$locale/blog/': typeof LocaleBlogIndexRoute
+}
+export interface FileRoutesByTo {
+  '/$locale': typeof LocaleIndexRoute
+  '/$locale/blog/$slug': typeof LocaleBlogSlugRoute
+  '/$locale/blog': typeof LocaleBlogIndexRoute
+}
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/$locale/': typeof LocaleIndexRoute
+  '/$locale/blog/$slug': typeof LocaleBlogSlugRoute
+  '/$locale/blog/': typeof LocaleBlogIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: never
+  fullPaths: '/$locale/' | '/$locale/blog/$slug' | '/$locale/blog/'
   fileRoutesByTo: FileRoutesByTo
-  to: never
-  id: '__root__'
+  to: '/$locale' | '/$locale/blog/$slug' | '/$locale/blog'
+  id: '__root__' | '/$locale/' | '/$locale/blog/$slug' | '/$locale/blog/'
   fileRoutesById: FileRoutesById
 }
-export interface RootRouteChildren {}
-
-declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {}
+export interface RootRouteChildren {
+  LocaleIndexRoute: typeof LocaleIndexRoute
+  LocaleBlogSlugRoute: typeof LocaleBlogSlugRoute
+  LocaleBlogIndexRoute: typeof LocaleBlogIndexRoute
 }
 
-const rootRouteChildren: RootRouteChildren = {}
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/$locale/': {
+      id: '/$locale/'
+      path: '/$locale'
+      fullPath: '/$locale/'
+      preLoaderRoute: typeof LocaleIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$locale/blog/': {
+      id: '/$locale/blog/'
+      path: '/$locale/blog'
+      fullPath: '/$locale/blog/'
+      preLoaderRoute: typeof LocaleBlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$locale/blog/$slug': {
+      id: '/$locale/blog/$slug'
+      path: '/$locale/blog/$slug'
+      fullPath: '/$locale/blog/$slug'
+      preLoaderRoute: typeof LocaleBlogSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+  }
+}
+
+const rootRouteChildren: RootRouteChildren = {
+  LocaleIndexRoute: LocaleIndexRoute,
+  LocaleBlogSlugRoute: LocaleBlogSlugRoute,
+  LocaleBlogIndexRoute: LocaleBlogIndexRoute,
+}
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
