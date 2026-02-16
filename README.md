@@ -15,7 +15,7 @@ Bare in mind that if you clone the project and install the following dependencie
 - [Tailwind](https://tailwindcss.com/)
 - [Lucide icons](https://lucide.dev/)
 
-_ps, I am going to keep the project updated with the latest versions of each library._
+_p.s, I am going to keep the project updated with the latest versions of each library._
 
 ## Installation
 
@@ -80,4 +80,5 @@ keywords: "react, a11y, mdx"
 This is a personal brand project focused on web development and accessibility. If you find a bug or have a suggestion to improve the accessibility architecture, feel free to open an issue or a pull request!
 
 Thanks and keep writing and learning new languages :) 
-if you have any question you can open an issue of contact me via email or linkedin (you will find the info on my github's profile)
+__p.s 1, If it happens that you like the project please leave me a star! I would really appreciate it!!!_
+__p.s 2, If you have any question you can open an issue of contact me via email or linkedin (you will find the info on my github's profile)_
