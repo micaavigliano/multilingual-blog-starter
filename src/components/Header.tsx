@@ -71,9 +71,6 @@ const Header = () => {
           </Link>
           <LanguageSwitcher translations={translations} />
         </nav>
-
-        {/* Mobile Menu Button */}
-
       </div>
     </header>
   )
