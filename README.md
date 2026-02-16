@@ -22,6 +22,8 @@ _ps, I am going to keep the project updated with the latest versions of each lib
 1. Clone the repository
 ```js
 git clone
+```
+```js
 cd skeleton-multi-lang-blog
 ```
 2. Install dependencies
